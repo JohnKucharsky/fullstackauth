@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { Button, TextField } from "@mui/material";
-
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { register, reset } from "../../features/auth/authSlice";
+import { useEffect } from "react";
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -9,9 +13,40 @@ const Register = () => {
     password: "",
     password2: "",
   });
+  const { name, email, password, password2 } = formData;
 
-  const onSubmit = () => {};
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const { isLoading, user, isError, isSuccess, message } = useSelector(
+    (state) => state.auth,
+  );
+  console.log(user);
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  const onSubmit = () => {
+    if (password !== password2) {
+      toast.error("Passwords do not match");
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+      };
+      dispatch(register(userData));
+    }
+  };
+  if (isLoading) {
+    return <div style={{ color: "red", fontSize: "2rem" }}>Waiting</div>;
+  }
   // input field
   const inputJSX = (v) => {
     return (
