@@ -30,7 +30,8 @@ const Login = () => {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     const userData = {
       email,
       password,
@@ -44,16 +45,11 @@ const Login = () => {
   // input field
   const inputJSX = (v) => {
     return (
-      <div key={v}>
-        <p>{v}*</p>
+      <div style={{ marginBottom: "0.7rem" }} key={v}>
         <TextField
           required
-          InputLabelProps={{ shrink: false }}
+          label={v}
           placeholder={v}
-          sx={{
-            marginBottom: "0.5rem ",
-            backgroundColor: "#F6F7FB",
-          }}
           value={formData[v]}
           onChange={(e) =>
             setFormData((x) => ({
@@ -68,15 +64,19 @@ const Login = () => {
   // input field
 
   return (
-    <div>
-      <h3>
-        <FaSignInAlt /> Login
-      </h3>
-      <p>Please create an account</p>
-      {Object.keys(formData).map((v) => inputJSX(v))}
-      <Button onClick={() => onSubmit()} variant="contained">
-        Submit
-      </Button>
+    <div className="center">
+      <div className="headerform">
+        <h3>
+          <FaSignInAlt /> Login
+        </h3>
+        <p>Please create an account</p>
+      </div>
+      <form onSubmit={onSubmit}>
+        {Object.keys(formData).map((v) => inputJSX(v))}
+        <Button type="submit" variant="contained">
+          Submit
+        </Button>
+      </form>
     </div>
   );
 };

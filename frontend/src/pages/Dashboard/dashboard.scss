@@ -1,0 +1,27 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+  gap: 1rem;
+  &__top {
+  }
+  &__middle {
+    &--form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+    }
+  }
+  &__bottom {
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+    margin-bottom: 1rem;
+    p {
+      color: gray;
+      font-size: 0.8rem;
+    }
+  }
+}

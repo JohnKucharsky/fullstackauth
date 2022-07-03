@@ -1,46 +1,48 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import { logout, reset } from "../../features/auth/authSlice";
+import "./header.scss";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   return (
-    <div>
-      <NavLink to="/">GoalSetter</NavLink>
-      <ul>
+    <div className="header">
+      <Link className="header__link" to="/">
+        GoalSetter
+      </Link>
+      <div>
         {user ? (
-          <li>
-            <NavLink to="/login">
-              <Button
-                variant="contained"
-                onClick={() => {
-                  dispatch(logout());
-                  dispatch(reset());
-                  navigate("/");
-                }}>
-                <FaSignOutAlt /> Logout
-              </Button>
-            </NavLink>
-          </li>
+          <div>
+            <Button
+              startIcon={<FaSignOutAlt />}
+              variant="outlined"
+              onClick={() => {
+                dispatch(logout());
+                dispatch(reset());
+                navigate("/");
+              }}>
+              Logout
+            </Button>
+          </div>
         ) : (
-          <>
-            <li>
-              <NavLink to="/login">
+          <div className="header__right">
+            <div>
+              <Link className="header__link" to="/login">
                 <FaSignInAlt /> Login
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/register">
+              </Link>
+            </div>
+            <div>
+              <Link className="header__link" to="/register">
                 <FaUser /> Register
-              </NavLink>
-            </li>
-          </>
+              </Link>
+            </div>
+          </div>
         )}
-      </ul>
+      </div>
     </div>
   );
 };
