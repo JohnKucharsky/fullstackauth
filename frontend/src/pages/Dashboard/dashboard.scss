@@ -5,6 +5,9 @@
   margin-top: 3rem;
   gap: 1rem;
   &__top {
+    h2 {
+      margin-bottom: 1rem;
+    }
   }
   &__middle {
     &--form {
